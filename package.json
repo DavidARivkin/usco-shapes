@@ -1,0 +1,18 @@
+{
+  "name": "usco-shapes",
+  "main": "",
+  "description": "all shapes (2D & 3D) for usco",
+  "author": "Mark kaosat-dev Moissette",
+  "license": "MIT",
+  "version": "0.0.1",
+  "peerDependencies":{
+    "usco-kernel": "git://github.com/usco/usco-kernel.git"
+  },
+  "devDependencies": {
+    "usco-kernel": "git://github.com/usco/usco-kernel.git",
+    "grunt": "",
+    "grunt-browserify": "",
+    "browserify": "",
+    "coffeeify": ""
+  }
+}
