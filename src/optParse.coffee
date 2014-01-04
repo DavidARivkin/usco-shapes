@@ -1,27 +1,26 @@
 'use strict'
-THREE = require( 'three' )
+maths = require "usco-maths"
 
 #params parsing
-
 toVector3 = (param, defaultValue) ->
   result = param
   
   if not param?
     if not defaultValue?
-      defaultValue = new THREE.Vector3()
+      defaultValue = new maths.Vector3()
     result = defaultValue
   
   if result instanceof Array
     if result.length == 3
-      result = new THREE.Vector3(result[0], result[1], result[2])
+      result = new maths.Vector3(result[0], result[1], result[2])
     else if result.length == 2
-      result = new THREE.Vector3(result[0], result[1], 1)
+      result = new maths.Vector3(result[0], result[1], 1)
     else if result.length == 1
-      result = new THREE.Vector3(result[0], 1, 1)
-  else if result instanceof THREE.Vector3
+      result = new maths.Vector3(result[0], 1, 1)
+  else if result instanceof maths.Vector3
     result = result
   else
-    result = new THREE.Vector3(result, result, result)
+    result = new maths.Vector3(result, result, result)
   result
   
 toVector2 = (param, defaultValue) ->
@@ -29,18 +28,18 @@ toVector2 = (param, defaultValue) ->
   
   if not param?
     if not defaultValue?
-      defaultValue = new THREE.Vector2()
+      defaultValue = new maths.Vector2()
     result = defaultValue
   
   if result instanceof Array
     if result.length == 2
-      result = new THREE.Vector2(result[0], result[1])
+      result = new maths.Vector2(result[0], result[1])
     else if result.length == 1
-      result = new THREE.Vector2(result[0], 1)
-  else if result instanceof THREE.Vector2
+      result = new maths.Vector2(result[0], 1)
+  else if result instanceof maths.Vector2
     result = result
   else
-    result = new THREE.Vector2(result, result)
+    result = new maths.Vector2(result, result)
   result
   
 
@@ -129,7 +128,7 @@ parseOption2 = (options, optionname, defaultvalue) ->
 
 
 parseOptionAs3DVector = (options, optionname, defaultValue, defaultValue2) ->
-  # Parse an option and force into a THREE.Vector3. If a scalar is passed it is converted
+  # Parse an option and force into a maths.Vector3. If a scalar is passed it is converted
   # into a vector with equal x,y,z, if a boolean is passed and is true, take defaultvalue, otherwise defaultvalue2
   if optionname of options
     if options[optionname] == false or options[optionname] == true
@@ -143,19 +142,19 @@ parseOptionAs3DVector = (options, optionname, defaultValue, defaultValue2) ->
   
   if result instanceof Array
     if result.length == 3
-      result = new THREE.Vector3(result[0], result[1], result[2])
+      result = new maths.Vector3(result[0], result[1], result[2])
     else if result.length == 2
-      result = new THREE.Vector3(result[0], result[1], 1)
+      result = new maths.Vector3(result[0], result[1], 1)
     else if result.length == 1
-      result = new THREE.Vector3(result[0], 1, 1)
-  else if result instanceof THREE.Vector3
+      result = new maths.Vector3(result[0], 1, 1)
+  else if result instanceof maths.Vector3
     result = result
   else
-    result = new THREE.Vector3(result, result, result)
+    result = new maths.Vector3(result, result, result)
   result
 
 parseOptionAs2DVector = (options, optionname, defaultValue, defaultValue2) ->
-  # Parse an option and force into a THREE.Vector2. If a scalar is passed it is converted
+  # Parse an option and force into a maths.Vector2. If a scalar is passed it is converted
   # into a vector with equal x,y, if a boolean is passed and is true, take defaultvalue, otherwise defaultvalue2
   if optionname of options
     if options[optionname] == false or options[optionname] == true
@@ -167,7 +166,7 @@ parseOptionAs2DVector = (options, optionname, defaultValue, defaultValue2) ->
   
   
   result = parseOption(options, optionname, defaultValue)
-  result = new THREE.Vector2(result)
+  result = new maths.Vector2(result)
   result
 
 parseOptionAsFloat = (options, optionname, defaultvalue) ->
@@ -236,21 +235,21 @@ parseOptionAsLocations = (options, optionName, defaultValue) ->
   stuff.toString(2)
   
 parseCenter = (options, optionname, defaultValue, defaultValue2, vectorClass) ->
-  # Parse a "center" option and force into a THREE.Vector3/THREE.Vector2. If a scalar is passed it is converted
+  # Parse a "center" option and force into a maths.Vector3/maths.Vector2. If a scalar is passed it is converted
   # into a vector with equal x,y,z, if a boolean is passed and is true, take defaultvalue, otherwise defaultvalue2
   #if defaultValue
   
-  if vectorClass == THREE.Vector3
+  if vectorClass == maths.Vector3
     defaultValue = toVector3(defaultValue)
     defaultValue2 = toVector3(defaultValue2)
-  
+
   if optionname of options
     centerOption = options[optionname]
     if centerOption instanceof Array
       
       newDefaultValue = defaultValue #new vectorClass(defaultValue.x, defaultValue.y, defaultValue.z)
       newDefaultValue2 = defaultValue2# new vectorClass(defaultValue2.x, defaultValue2.y, defaultValue2.z)
-      result = new THREE.Vector3()
+      result = new maths.Vector3()
       
       for component, index  in centerOption
         if typeof component is 'boolean'
@@ -294,7 +293,7 @@ insertSorted = (array, element, comparefunc) ->
   
 interpolateBetween2DPointsForY = (point1, point2, y) ->
   # Get the x coordinate of a point with a certain y coordinate, interpolated between two
-  # points (THREE.Vector2).
+  # points (maths.Vector2).
   # Interpolation is robust even if the points have the same y coordinate
   f1 = y - point1.y
   f2 = point2.y - point1.y
@@ -322,7 +321,7 @@ reTesselateCoplanarPolygons = (sourcepolygons, destpolygons) ->
     plane = sourcepolygons[0].plane
     shared = sourcepolygons[0].shared
     orthobasis = new OrthoNormalBasis(plane)
-    polygonvertices2d = [] # array of array of THREE.Vector2
+    polygonvertices2d = [] # array of array of maths.Vector2
     polygontopvertexindexes = [] # array of indexes of topmost vertex per polygon
     topy2polygonindexes = {}
     ycoordinatetopolygonindexes = {}
@@ -362,7 +361,7 @@ reTesselateCoplanarPolygons = (sourcepolygons, destpolygons) ->
           else
             newy = pos2d.y
             ycoordinatebins[ycoordinatebin] = pos2d.y
-          pos2d = new THREE.Vector2(pos2d.x, newy)
+          pos2d = new maths.Vector2(pos2d.x, newy)
           vertices2d.push pos2d
           y = pos2d.y
           if (i is 0) or (y < miny)
@@ -529,13 +528,13 @@ reTesselateCoplanarPolygons = (sourcepolygons, destpolygons) ->
           vertices2d = polygonvertices2d[polygonindex]
           numvertices = vertices2d.length
           x = interpolateBetween2DPointsForY(activepolygon.topleft, activepolygon.bottomleft, ycoordinate)
-          topleft = new THREE.Vector2(x, ycoordinate)
+          topleft = new maths.Vector2(x, ycoordinate)
           x = interpolateBetween2DPointsForY(activepolygon.topright, activepolygon.bottomright, ycoordinate)
-          topright = new THREE.Vector2(x, ycoordinate)
+          topright = new maths.Vector2(x, ycoordinate)
           x = interpolateBetween2DPointsForY(activepolygon.topleft, activepolygon.bottomleft, nextycoordinate)
-          bottomleft = new THREE.Vector2(x, nextycoordinate)
+          bottomleft = new maths.Vector2(x, nextycoordinate)
           x = interpolateBetween2DPointsForY(activepolygon.topright, activepolygon.bottomright, nextycoordinate)
-          bottomright = new THREE.Vector2(x, nextycoordinate)
+          bottomright = new maths.Vector2(x, nextycoordinate)
           outpolygon =
             topleft: topleft
             topright: topright

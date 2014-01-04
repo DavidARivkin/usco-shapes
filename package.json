@@ -5,11 +5,16 @@
   "author": "Mark kaosat-dev Moissette",
   "license": "MIT",
   "version": "0.0.1",
+  "dependencies":{
+    "usco-maths": "git://github.com/usco/usco-maths.git"
+  },
   "peerDependencies":{
     "usco-kernel": "git://github.com/usco/usco-kernel.git"
   },
   "devDependencies": {
     "usco-kernel": "git://github.com/usco/usco-kernel.git",
+    "three-js": "git://github.com/usco/three.js.git",
+    "jasmine-node": "",
     "grunt": "",
     "grunt-browserify": "",
     "browserify": "",

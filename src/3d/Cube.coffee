@@ -1,34 +1,42 @@
 'use strict'
 THREE = require 'three'
+
+maths = require "usco-maths"
 ObjectBase = require '../base'
 optParse = require '../optParse'
+THREE.Vector3 = maths.Vector3 #HACk !!
 
+utils = require '../utils'
+
+Vector3 = maths.Vector3
+###*
+* Construct a solid cuboid. with optional corner roundings
+* Example code:
+*     cube = new Cube({size:10, center: [0, 0, 0]})
+###
 class Cube extends ObjectBase
-  # Construct a solid cuboid. with optional corner roundings (making it, you guessed it, a rounded cube)
-  # Parameters:
-  #   center: center of cube (default [0,0,0])
-  #   size: size of cube (default [1,1,1]), can be specified as scalar or as 3D vector
-  #   r: radius of corners
-  #   $fn: corner resolution
-  #  
-  # Example code:
-  #     cube = new Cube({
-  #       center: [0, 0, 0],
-  #       radius: 1
-  #     })
+  ###*
+  * Construct a solid cuboid. with optional corner roundings
+  * @param {Array/Scalar} size : size of cube (default [1,1,1]), can be specified as scalar or as 3D vector
+  * @param {Array/Scalar} center: center of cube (default [0,0,0])
+  * @param {Array/Scalar} r: radius of corners
+  * @param {Array/Scalar} $fn: corner resolution
+  ###
   constructor:(options)->
     options = options or {}
     @defaults = { size:[1,1,1], center:[0,0,0], r:0, $fn:0}
+    #options = utils.merge(options, @defaults)
     
-    size = optParse.parseOptionAs3DVector(options, "size", @defaults["size"])
-    center = optParse.parseCenter(options, "center", size.divideScalar(2), @defaults["center"], THREE.Vector3)
+    size   = optParse.parseOptionAs3DVector(options, "size", @defaults["size"])
+    center = optParse.parseCenter(options, "center", size.clone().divideScalar(2), @defaults["center"], Vector3)
     
-    console.log "size", size, "center",center
     #do params validation
     throw new Error("Cube size should be non-negative") if size.x <0 or size.y <0 or size.z <0
     
     geometry = new THREE.CubeGeometry( size.x, size.y, size.z )
-    #TODO: handle center
+    #center offset like openscad
+    geometry.applyMatrix( new THREE.Matrix4().makeTranslation(size.x/2, size.y/2, size.z/2) )
     super( geometry )
+    this.position = center
   
 module.exports = Cube

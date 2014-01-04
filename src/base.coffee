@@ -1,6 +1,6 @@
-maths = require "../maths/maths"
-THREE = require( 'three' )
-ThreeCSG =  require( '../../vendor/ThreeCSG' )
+THREE = require 'three'
+maths = require "usco-maths"
+#ThreeCSG =  require( '../../vendor/ThreeCSG' )
   
 #TODO: where to do canonicalization and normalization?
 #TODO: review inheritance : basic geometry (cube, sphere) should not have children etc (like "mesh") but should have position, rotation etc
@@ -9,27 +9,28 @@ ThreeCSG =  require( '../../vendor/ThreeCSG' )
 # would be a good idea ...
 Vector3 = maths.Vector3
 
+
 class ObjectBase extends THREE.Mesh
   #base class regrouping features of THREE.Mesh and THREE.CSG
   
   constructor:( geometry, orientation, material )->
     if not material?
-      material = new THREE.MeshPhongMaterial({color:  0xFFFFFF , shading: THREE.SmoothShading,  shininess: shine, specular: spec, metal: false}) 
+      material = new THREE.MeshPhongMaterial({color:  0xFFFFFF , shading: THREE.SmoothShading,  shininess: 0, specular: 0, metal: false}) 
     #super(geometry, material)
     if not geometry?
       geometry = null
     THREE.Mesh.call( @, geometry, material )
     
     orientation = orientation or new Vector3(0,0,1)
+
+    @bsp = null
+
+    
     #VERY important : transforms stack : all operations done on this shape is stored here
     #TODO: should we be explicit , ie in basic shape class, or do it in processor/preprocessor
     @transforms = []
-    
-    #console.log @prototype
-    #Object.create(@prototype)
-    @bsp = null
-    
     @connectors = []
+    @defaults = {}
   
   #------base transforms--------#
   translate:( amount )->
@@ -52,7 +53,7 @@ class ObjectBase extends THREE.Mesh
     #TODO: add actual data structures for this
     @transforms.push( "R:"+rVector )
   
-  #------retro compatibility------#
+  #------backwards compatibility------#
   color:(rgba)->
     @material.color = rgba
     
