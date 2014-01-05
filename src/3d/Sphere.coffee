@@ -16,12 +16,11 @@ Constants = require '../constants'
 class Sphere extends ObjectBase
   constructor:(options)->
     options = options or {}
-    defaults = { r:1, d:0.5, center:[0,0,0], o:[0,0,0], angle1:360, angle2:360, angle3:360, $fn:Constants.res3D, icosa:true }
+    defaults = { r:1, d:0.5, center:[0,0,0], o:[0,0,1], angle1:360, angle2:360, angle3:360, $fn:Constants.res3D, icosa:true }
     
     r = options.r or 1
     $fn = options.$fn or $fn
     icosa = options.icosa or true
-    console.log "r", r , "$fn", $fn, "ico", icosa
     
     if icosa
       geometry = new THREE.SphereGeometry( r, $fn, $fn )

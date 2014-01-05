@@ -3,8 +3,12 @@ THREE = require 'three'
 
 ObjectBase = require '../base'
 Constants = require '../constants'
-utils = require '../../utils'
+utils = require '../utils'
 optParse = require '../optParse'
+maths = require 'usco-maths'
+
+THREE.Vector3 = maths.Vector3 #HACk !!
+
 
 class Cylinder extends ObjectBase
   # Construct a solid cylinder.
@@ -38,8 +42,8 @@ class Cylinder extends ObjectBase
     $fn = options.$fn
     
     geometry = new THREE.CylinderGeometry(radiusTop, radiusBottom, height, $fn, heightSegments)
-    geometry.rotation.x = 90
+    geometry.applyMatrix( new THREE.Matrix4().makeRotationAxis( new THREE.Vector3(0,1,0),90) )
+
     super(geometry)
-  
   
 module.exports = Cylinder

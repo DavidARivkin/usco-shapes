@@ -1,6 +1,6 @@
 THREE = require 'three'
 maths = require "usco-maths"
-#ThreeCSG =  require( '../../vendor/ThreeCSG' )
+ThreeCSG =  require( '../vendor/ThreeCSG' )
   
 #TODO: where to do canonicalization and normalization?
 #TODO: review inheritance : basic geometry (cube, sphere) should not have children etc (like "mesh") but should have position, rotation etc

@@ -1,4 +1,3 @@
-THREE = require('three')
 
 linear = "L"
 rotate = "R"

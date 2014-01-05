@@ -1,5 +1,5 @@
 'use strict'
-Sphere = require("../src/3d/Cylinder")
+Cylinder = require("../src/3d/Cylinder")
 maths = require "usco-maths"
 
 describe "Cylinder shape", ->    
