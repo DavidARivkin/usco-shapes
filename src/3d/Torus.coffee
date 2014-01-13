@@ -12,7 +12,6 @@ Constants = require '../constants'
 * @param {float} angle2: angle along second axis (allows to create a portion of torus instead of a full torus) (default:360)
 * @param {float} angle3: angle along third axis (allows to create a portion of torus instead of a full torus) (default:360)
 * @param {int} $fn: (resolution) determines the number of polygons per 360 degree revolution (default 12)
-* @param {bool} icosa: (optional): if true, the torus will actually be an icosahedron (default true)
 ###
 class Torus extends ObjectBase
   constructor:(options)->

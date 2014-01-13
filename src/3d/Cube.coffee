@@ -26,6 +26,8 @@ class Cube extends ObjectBase
     options = options or {}
     @defaults = { size:[1,1,1], center:[0,0,0], r:0, $fn:0}
     #options = utils.merge(options, @defaults)
+
+    @frep = null #TODO: put function representation here : INDEPENDENT from any polygonal , voxel or other implementation
     
     size   = optParse.parseOptionAs3DVector(options, "size", @defaults["size"])
     center = optParse.parseCenter(options, "center", size.clone().divideScalar(2), @defaults["center"], Vector3)
