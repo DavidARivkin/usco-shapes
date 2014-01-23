@@ -1,5 +1,7 @@
 'use strict';
-	
+
+var THREE = require('three');
+
 var ThreeBSP,
 	EPSILON = 1e-5,
 	COPLANAR = 0,

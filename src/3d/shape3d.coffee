@@ -3,18 +3,18 @@ class Shape3d
   
   constructor:()->
     @frep = null #TODO: put function representation here : INDEPENDENT from any polygonal , voxel or other implementation
-
+    @codeLocation = null #TODO : this should hold the name of the module (real or virtual) and the start/end line location
+    #of the CODE of the object : this would bind the code base representation to the object instance itself
   ###
   * Method to update exisiting shape 3d
   ###
   update(params)->
-    throw new Exception("Not implemented)
-
+    throw new Exception("Not implemented")
 
   #------boolean operations------#
-  ###* 
+  ###
   * apply a boolean union operation: current objects become a fusion between itself
-  and passed in objects
+  * and passed in objects
   * @param {object, array} objects:  one ore more objects to fuse this object with.
   * @return {Object} the current object instance to allow operation chaining
   ###

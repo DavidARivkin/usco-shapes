@@ -5,10 +5,8 @@ extrusion = require '../extrusion'
 utils = require '../../utils'
 merge = utils.merge
 
-###* 
-* For now Shape2d is simply a proxy for THREE.Shape
-###
-class Shape2d extends THREE.Shape
+
+class Shape2d #extends THREE.Shape
   
   constructor:(points)->
     THREE.Shape.call @, points
