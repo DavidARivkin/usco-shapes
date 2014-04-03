@@ -1,15 +1,37 @@
 
 class Shape3d
-  
   constructor:()->
-    @frep = null #TODO: put function representation here : INDEPENDENT from any polygonal , voxel or other implementation
-    @codeLocation = null #TODO : this should hold the name of the module (real or virtual) and the start/end line location
+    @__meta = {} #holds object meta data ("reflexion", links between code and visual etc
+    @__frep = null #TODO: put function representation here : INDEPENDENT from any polygonal , voxel or other implementation
+    #this holds all the history of operations for the given shape
+    @operations = []
     #of the CODE of the object : this would bind the code base representation to the object instance itself
+    @generate()
+    
   ###
   * Method to update exisiting shape 3d
   ###
   update(params)->
     throw new Exception("Not implemented")
+  
+  ###
+  * method that holds the basic/full generation algorithm for this shape
+  ###
+  generate:->
+    throw new Exception("Not implemented")
+  
+  ###
+  * method to handle "inteligently" attribute changes
+  * overriding this is advised
+  ###
+  attributeChanged:(attrName, oldValue, newValue)->
+    throw new Exception("Not implemented")
+    @[attrName] = newValue
+    #@properties[attrName][2] = newValue
+  
+    operation = new AttributeChange(this, attrName, oldValue,newValue)
+    event = new CustomEvent('newOperation',{detail: {msg: operation}})
+    document.dispatchEvent(event)
 
   #------boolean operations------#
   ###

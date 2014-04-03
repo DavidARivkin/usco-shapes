@@ -35,10 +35,18 @@ class Cube extends ObjectBase
     #do params validation
     throw new Error("Cube size should be non-negative") if size.x <0 or size.y <0 or size.z <0
     
-    geometry = new THREE.CubeGeometry( size.x, size.y, size.z )
-    #center offset like openscad
-    geometry.applyMatrix( new THREE.Matrix4().makeTranslation(size.x/2, size.y/2, size.z/2) )
-    super( geometry )
+    super(option)
     this.position = center
+  
+  generate:->
+    @geometry = new THREE.CubeGeometry( size.x, size.y, size.z )
+    #center offset like openscad
+    @geometry.applyMatrix( new THREE.Matrix4().makeTranslation(size.x/2, size.y/2, size.z/2) )
+  
+  attributeChanged:(attrName, oldValue, newValue)->
+    super(attrName, oldValue, newValue)
+    console.log("cube's attribute changed", attrName, newValue, oldValue)
+    @geometry = new THREE.CubeGeometry( this.w, this.d, this.h );
+    @updateRenderables()
   
 module.exports = Cube
